@@ -49,8 +49,10 @@ public class Main{
         }
         s.close();
 
-        for(String key : nodes.keySet()){
+        for(Node n : nodes.values()){
             //Print neighbors
+            //loop through with values
+            n.printNeighbors();
             System.out.println(nodes.keySet());
         }
     }
