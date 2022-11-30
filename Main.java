@@ -33,6 +33,7 @@ public class Main{
             nodes.put(key, n);
         }
 
+        //Starter node
         Node startNode = nodes.get(starterKey);
 
         while(true){
@@ -53,7 +54,7 @@ public class Main{
             //Print neighbors
             //loop through with values
             n.printNeighbors();
-            System.out.println(nodes.keySet());
+            //System.out.println(nodes.keySet());
         }
     }
 }
