@@ -1,27 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
-public class Main{
-
-    //private HashMap<String, Node> nodes;
-
-    public Main(){
-        // nodes = new HashMap<>(); 
-        // Scanner s = new Scanner(System.in);
-        // String[] nodeNames = s.nextLine().split(" ");
-        // String starterKey = s.nextLine();
-
-        // for(var key : nodeNames){
-        //     Node n = new Node(key);
-        //     nodes.put(key, n);
-        // }
-
-        // Node startNode = nodes.get(starterKey);
-
-        // System.out.println(nodes);
-    }
+public class Main {
     public static void main(String[] args) {
         HashMap<String, Node> nodes;
         nodes = new HashMap<>(); 
@@ -52,20 +36,19 @@ public class Main{
         s.close();
 
         //Print neighbors
+        System.out.println("\n\nNode Neighbors:");
         for(Node n : nodes.values()){
             n.printNeighbors();
         }
         
-        System.out.println("\n\n");
-        System.out.println(startNode.key);
-        System.out.println("Depth-First Search:");
+        System.out.println("\nDepth-First Search:");
         depthFirst(startNode);
 
         for(Node n :nodes.values()){
             n.unVisit();
         }
 
-        System.out.println("\n\n");
+        System.out.println("\n\nBreadth-First Search:");
         breadthFirst(startNode);
        
     }
@@ -74,7 +57,7 @@ public class Main{
     public static void depthFirst(Node startNode){
         String output = "";
         startNode.visit();
-        System.out.println(startNode.key);
+        System.out.print(startNode.key + " ");
         for(var node : startNode.neighbors){
             if(!node.visited){
                 //node.visit();
@@ -84,25 +67,57 @@ public class Main{
         }
     }
 
-    public static void breadthFirst(Node starNode) {
-        List<Node> queue = new ArrayList<>();
-        System.out.println(starNode.key);
-        starNode.visit();
-        queue.add(starNode);
 
-        while(!queue.isEmpty()){
-            for(var n : starNode.neighbors){
+    //q.offer(node);
+    //!q.isEmpty();
+    //q.peek();
+    //for(Node n : front.getNeighbors()) {Will need to make this method}
+
+
+
+    public static void breadthFirst(Node starNode) {
+        Queue<Node> q = new LinkedList<Node>();
+        q.offer(starNode);
+        starNode.visit();
+        System.out.print(starNode.key + " ");
+
+
+       while(!q.isEmpty()){
+            Node front = q.peek();
+            Node test = front.getNeighbor();
+            //System.out.println(test.key);
+
+            for(Node n : front.neighbors){
                 if(!n.visited){
-                    System.out.println("For loop: " + n.key);
-                    //Adding element to the end of the list
-                    queue.add(n);
+                    n.visit();
+                    System.out.print(n.key + " ");
+                    q.offer(n);
                 }
-            }
-            //Dequeue. This ends the while loop
-            queue.clear();
+                n = front.getNeighbor();
+                
+           }
+           q.poll();
         }
 
-        System.out.println(queue);
+
+        // List<Node> queue = new ArrayList<>();
+        // System.out.println(starNode.key);
+        // starNode.visit();
+        // queue.add(starNode);
+
+        // while(!queue.isEmpty()){
+        //     for(var n : starNode.neighbors){
+        //         if(!n.visited){
+        //             System.out.print(n.key + " ");
+        //             //Adding element to the end of the list
+        //             queue.add(n);
+        //         }
+        //     }
+        //     //Dequeue. This ends the while loop
+        //     queue.clear();
+        // }
+
+       // System.out.println(queue);
        //breadthFirst(starNode.neighbors.get(0));
         
     }

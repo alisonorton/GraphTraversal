@@ -26,7 +26,11 @@ public class Node implements Comparable<Node>{
         visited = false;
     }
 
-    
+    public Node getNeighbor(){
+
+        return neighbors.get(0);
+
+    }
 
     public void printNeighbors(){
         String output = "";
