@@ -4,16 +4,26 @@ import java.util.Collections;
 public class Node implements Comparable<Node>{
     public String key;
    //String data;
-    private ArrayList<Node> neighbors;
+    public ArrayList<Node> neighbors;
+    public boolean visited;
 
     public Node(String n){
         key = n;
         neighbors = new ArrayList<>();
+        visited = false;
     }
 
     public void addNeighbor(Node other){
         neighbors.add(other);
         Collections.sort(neighbors);
+    }
+
+    public void visit(){
+        visited = true;
+    }
+
+    public void unVisit(){
+        visited = false;
     }
 
     
@@ -26,11 +36,6 @@ public class Node implements Comparable<Node>{
             output += node.key + " ";
         }
         System.out.println(output);
-
-    //    for(int i = 0; i < neighbors.size(); i++){
-    //     output = ;
-
-    //    }
     }
 
     @Override

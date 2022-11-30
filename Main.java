@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -50,12 +51,60 @@ public class Main{
         }
         s.close();
 
+        //Print neighbors
         for(Node n : nodes.values()){
-            //Print neighbors
-            //loop through with values
             n.printNeighbors();
-            //System.out.println(nodes.keySet());
         }
+        
+        System.out.println("\n\n");
+        System.out.println(startNode.key);
+        System.out.println("Depth-First Search:");
+        depthFirst(startNode);
+
+        for(Node n :nodes.values()){
+            n.unVisit();
+        }
+
+        System.out.println("\n\n");
+        breadthFirst(startNode);
+       
+    }
+
+    //Pass in starter node
+    public static void depthFirst(Node startNode){
+        String output = "";
+        startNode.visit();
+        System.out.println(startNode.key);
+        for(var node : startNode.neighbors){
+            if(!node.visited){
+                //node.visit();
+                output += node.key + " ";
+                depthFirst(node);
+            }
+        }
+    }
+
+    public static void breadthFirst(Node starNode) {
+        List<Node> queue = new ArrayList<>();
+        System.out.println(starNode.key);
+        starNode.visit();
+        queue.add(starNode);
+
+        while(!queue.isEmpty()){
+            for(var n : starNode.neighbors){
+                if(!n.visited){
+                    System.out.println("For loop: " + n.key);
+                    //Adding element to the end of the list
+                    queue.add(n);
+                }
+            }
+            //Dequeue. This ends the while loop
+            queue.clear();
+        }
+
+        System.out.println(queue);
+       //breadthFirst(starNode.neighbors.get(0));
+        
     }
 }
 
