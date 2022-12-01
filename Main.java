@@ -12,15 +12,18 @@ public class Main {
         Scanner s = new Scanner(System.in);
         String[] nodeNames = s.nextLine().split(" ");
         String starterKey = s.nextLine();
-
+        
+        //Storing nodes in hashmap
         for(var key : nodeNames){
             Node n = new Node(key);
             nodes.put(key, n);
         }
 
-        //Starter node
-        Node startNode = nodes.get(starterKey);
+        
+        Node startNode = nodes.get(starterKey); //starter node
 
+        //looping through to add neighbors to each node
+        //nodes are neighbors to EACH OTHER so be sure to add both
         while(true){
             String a = s.next();
             if(a.equals("***")){
@@ -35,7 +38,7 @@ public class Main {
         }
         s.close();
 
-        //Print neighbors
+        //Display
         System.out.println("\n\nNode Neighbors:");
         for(Node n : nodes.values()){
             n.printNeighbors();
@@ -50,76 +53,58 @@ public class Main {
 
         System.out.println("\n\nBreadth-First Search:");
         breadthFirst(startNode);
+        System.out.println("");
        
     }
 
-    //Pass in starter node
+/*****************************************************
+ * Function that traverses a graph using depth frist
+ * method
+ *****************************************************/
     public static void depthFirst(Node startNode){
-        String output = "";
-        startNode.visit();
-        System.out.print(startNode.key + " ");
+        String output = ""; //string for output
+        startNode.visit(); //mark as visited
+        System.out.print(startNode.key + " "); //print first value
+
+        //loop through the neighbors of each node
         for(var node : startNode.neighbors){
             if(!node.visited){
-                //node.visit();
-                output += node.key + " ";
-                depthFirst(node);
+                output += node.key + " "; //add value to output string
+                depthFirst(node); //recall function to loop through all the unvisited neighbors
             }
         }
     }
 
 
-    //q.offer(node);
-    //!q.isEmpty();
-    //q.peek();
-    //for(Node n : front.getNeighbors()) {Will need to make this method}
 
 
+/*****************************************************
+ * Function that traverses a graph using breadth frist
+ * method
+ *****************************************************/
 
     public static void breadthFirst(Node starNode) {
         Queue<Node> q = new LinkedList<Node>();
-        q.offer(starNode);
-        starNode.visit();
-        System.out.print(starNode.key + " ");
+        q.offer(starNode); //add to queue
+        starNode.visit(); //mark as visited
+        System.out.print(starNode.key + " "); //print value
 
 
        while(!q.isEmpty()){
-            Node front = q.peek();
-            Node test = front.getNeighbor();
-            //System.out.println(test.key);
+            Node front = q.peek(); //get first element of queue
 
+            //loop through the neighbors of the first element in the queue
             for(Node n : front.neighbors){
                 if(!n.visited){
-                    n.visit();
-                    System.out.print(n.key + " ");
-                    q.offer(n);
+                    n.visit(); //mark as visited
+                    System.out.print(n.key + " "); //print value
+                    q.offer(n); //add new node to the queue
                 }
-                n = front.getNeighbor();
                 
            }
-           q.poll();
+           q.poll(); //delete queue
         }
 
-
-        // List<Node> queue = new ArrayList<>();
-        // System.out.println(starNode.key);
-        // starNode.visit();
-        // queue.add(starNode);
-
-        // while(!queue.isEmpty()){
-        //     for(var n : starNode.neighbors){
-        //         if(!n.visited){
-        //             System.out.print(n.key + " ");
-        //             //Adding element to the end of the list
-        //             queue.add(n);
-        //         }
-        //     }
-        //     //Dequeue. This ends the while loop
-        //     queue.clear();
-        // }
-
-       // System.out.println(queue);
-       //breadthFirst(starNode.neighbors.get(0));
-        
     }
 }
 
